@@ -4,39 +4,20 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Button,
   ScrollView,
-  Image,
   TouchableOpacity,
-  Vibration,
+  Image,
 } from "react-native";
-import axios from "axios";
+
+//import components
+import FighterSearch from "./components/FighterSearch";
 
 export default function App() {
-  //states
-  const [data, setData] = React.useState([]);
-  const [text, setText] = useState("");
-  let jsonVal = [];
+  const [data, setData] = useState([]);
 
-  const handleButtonClick = async () => {
-    try {
-      const response = await axios.get(
-        "https://mma-fighter-profile-api-appdev.herokuapp.com/api/search?name=" +
-          text
-      );
-      jsonVal = response.data;
-
-      setData(jsonVal);
-    } catch (error) {
-      console.log(error);
-    }
+  const sendData = (data) => {
+    setData(data);
   };
-
-  function holdOnFighter() {
-    console.log("hold on fighter");
-    Vibration.vibrate();
-  }
 
   return (
     <View
@@ -68,32 +49,10 @@ export default function App() {
           boxShadow: "2px 2px 10px #dcdcdc",
         }}
       >
-        <View style={{ flexDirection: "row" }}>
-          <TextInput
-            style={{
-              flex: 1,
-              height: 30,
-              borderColor: "black",
-              borderWidth: 1,
-              maxWidth: 250,
-              minWidth: 200,
-              paddingHorizontal: 10,
-              borderRadius: 20,
-              backgroundColor: "#fff",
-            }}
-            onChangeText={(newText) => setText(newText)}
-            defaultValue={text}
-          />
-          <Button
-            title="Search"
-            color="blue"
-            onPress={handleButtonClick}
-            buttonStyle={styles.searchButton}
-            titleStyle={styles.searchButtonTitle}
-          ></Button>
-        </View>
-      </View>
+        {/* <FighterSearch /> */}
 
+        <FighterSearch sendData={sendData} />
+      </View>
       <ScrollView style={styles.scrollView}>
         {data.length != 0 ? (
           data.map((item, index) => (
