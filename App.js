@@ -8,6 +8,8 @@ import {
   Button,
   ScrollView,
   Image,
+  TouchableOpacity,
+  Vibration,
 } from "react-native";
 import axios from "axios";
 
@@ -31,35 +33,65 @@ export default function App() {
     }
   };
 
+  function holdOnFighter() {
+    console.log("hold on fighter");
+    Vibration.vibrate();
+  }
+
   return (
     <View
       style={{
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor: "#fffaf0",
       }}
     >
-      <Text style={{ fontSize: 30, paddingBottom: 60, paddingTop: 80 }}>
-        Search for fighter
+      <Text
+        style={{
+          fontSize: 40,
+          paddingBottom: 60,
+          paddingTop: 80,
+          color: "darkblue",
+        }}
+      >
+        Search for fighters
       </Text>
-      <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-        <TextInput
-          style={{
-            flex: 1,
-            height: 30,
-            borderColor: "gray",
-            borderWidth: 1,
-            maxWidth: 250,
-            minWidth: 200,
-          }}
-          onChangeText={(newText) => setText(newText)}
-          defaultValue={text}
-        />
-        <Button
-          style={{ backgroundColor: "blue", color: "blue" }}
-          title="Search"
-          onPress={handleButtonClick}
-        ></Button>
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          marginVertical: 10,
+          paddingHorizontal: 10,
+          paddingTop: 9,
+          borderRadius: 10,
+          boxShadow: "2px 2px 10px #dcdcdc",
+        }}
+      >
+        <View style={{ flexDirection: "row" }}>
+          <TextInput
+            style={{
+              flex: 1,
+              height: 30,
+              borderColor: "black",
+              borderWidth: 1,
+              maxWidth: 250,
+              minWidth: 200,
+              paddingHorizontal: 10,
+              borderRadius: 20,
+              backgroundColor: "#fff",
+            }}
+            onChangeText={(newText) => setText(newText)}
+            defaultValue={text}
+          />
+          <Button
+            title="Search"
+            color="blue"
+            onPress={handleButtonClick}
+            buttonStyle={styles.searchButton}
+            titleStyle={styles.searchButtonTitle}
+          ></Button>
+        </View>
       </View>
 
       <ScrollView style={styles.scrollView}>
@@ -74,28 +106,23 @@ export default function App() {
                 justifyContent: "center",
               }}
             >
-              <Image
-                source={{ uri: item.image }}
-                style={{ width: 110, height: 160, borderRadius: 60 / 2 }}
-              />
-              <Text style={styles.text} key={index}>
-                Name: {item.name}
-              </Text>
-              <Text style={styles.text} key={index}>
-                Nickname: {item.nickname}
-              </Text>
-              <Text style={styles.text} key={index}>
-                Country: {item.country}
-              </Text>
-              <Text style={styles.text} key={index}>
-                Fighting out of: {item.fightingOutOf}
-              </Text>
-              <Text style={styles.text} key={index}>
-                Wins: {item.wins}
-              </Text>
-              <Text style={styles.text} key={index}>
-                Losses: {item.losses}
-              </Text>
+              <TouchableOpacity
+                style={{
+                  paddingBottom: 20,
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                onPress={() => holdOnFighter()}
+              >
+                <Image
+                  source={{ uri: item.image }}
+                  style={{ width: 150, height: 210, borderRadius: 60 / 2 }}
+                />
+                <Text style={styles.name} key={index}>
+                  {item.name}
+                </Text>
+              </TouchableOpacity>
             </View>
           ))
         ) : (
@@ -111,5 +138,22 @@ const styles = StyleSheet.create({
   scrollView: {
     marginHorizontal: 40,
     paddingTop: 20,
+  },
+  name: {
+    paddingTop: 10,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  searchButton: {
+    backgroundColor: "red",
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    elevation: 10,
+    paddingTop: 20,
+  },
+  searchButtonTitle: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
