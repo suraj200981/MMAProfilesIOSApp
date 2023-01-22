@@ -95,7 +95,7 @@ export default function App() {
       </View>
 
       <ScrollView style={styles.scrollView}>
-        {Array.isArray(data) ? (
+        {data.length != 0 ? (
           data.map((item, index) => (
             <View
               key={index}
@@ -126,7 +126,7 @@ export default function App() {
             </View>
           ))
         ) : (
-          <Text>No data</Text>
+          <Text>No Fighters Found</Text>
         )}
       </ScrollView>
       <StatusBar style="auto" />
