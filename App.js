@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  ScrollView,
+} from "react-native";
 import axios from "axios";
 
 export default function App() {
   //states
   const [data, setData] = React.useState([]);
   const [text, setText] = useState("");
-  let jsonVal;
+  let jsonVal = [];
 
   const handleButtonClick = async () => {
     try {
@@ -15,10 +22,9 @@ export default function App() {
         "https://mma-fighter-profile-api-appdev.herokuapp.com/api/search?name=" +
           text
       );
-      jsonVal = JSON.stringify(response.data[0]);
-      console.log(jsonVal);
+      jsonVal = response.data;
 
-      setData(response.data.name);
+      setData(jsonVal);
     } catch (error) {
       console.log(error);
     }
@@ -27,9 +33,9 @@ export default function App() {
   return (
     <View
       style={{
-        ...styles.container,
-        flexDirection: "row",
-        flexWrap: "wrap",
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
       <Text style={{ fontSize: 30, paddingBottom: 60, paddingTop: 80 }}>
@@ -54,17 +60,28 @@ export default function App() {
           onPress={handleButtonClick}
         ></Button>
       </View>
-      <Text>{data}</Text>
+
+      <ScrollView style={styles.scrollView}>
+        <Text style={styles.text}>
+          {Array.isArray(data) ? (
+            data.map((item, index) => (
+              <Text key={index}>
+                {item.name} {item.nickname}
+              </Text>
+            ))
+          ) : (
+            <Text>No data</Text>
+          )}
+        </Text>
+      </ScrollView>
       <StatusBar style="auto" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+  scrollView: {
+    marginHorizontal: 40,
+    paddingTop: 20,
   },
 });
