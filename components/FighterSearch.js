@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Vibration } from "react-native";
 import axios from "axios";
 import { StyleSheet, View, TextInput, Button } from "react-native";
 
@@ -9,6 +8,9 @@ export default function FighterSearch(props) {
   let jsonVal = [];
 
   const handleButtonClick = async () => {
+    //double click to search
+    console.log("searching for " + text);
+
     try {
       const response = await axios.get(
         "https://mma-fighter-profile-api-appdev.herokuapp.com/api/search?name=" +
@@ -17,16 +19,11 @@ export default function FighterSearch(props) {
       jsonVal = response.data;
 
       setData(jsonVal);
-      props.sendData(data);
+      props.sendData(jsonVal);
     } catch (error) {
       console.log(error);
     }
   };
-
-  function holdOnFighter() {
-    console.log("hold on fighter");
-    Vibration.vibrate();
-  }
 
   return (
     <View style={{ flexDirection: "row" }}>

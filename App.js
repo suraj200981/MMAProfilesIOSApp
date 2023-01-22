@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Vibration,
 } from "react-native";
 
 //import components
@@ -18,6 +19,11 @@ export default function App() {
   const sendData = (data) => {
     setData(data);
   };
+
+  function holdOnFighter() {
+    console.log("hold on fighter");
+    Vibration.vibrate();
+  }
 
   return (
     <View
