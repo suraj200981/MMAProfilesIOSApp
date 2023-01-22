@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import axios from "axios";
 
 export default function App() {
+  //states
   const [data, setData] = React.useState([]);
+  const [text, setText] = useState("");
+  let jsonVal;
 
   const handleButtonClick = async () => {
     try {
       const response = await axios.get(
-        "https://mma-fighter-profile-api-appdev.herokuapp.com/api/all_profiles"
+        "https://mma-fighter-profile-api-appdev.herokuapp.com/api/search?name=" +
+          text
       );
-      //convert to response.data to json below
-      let l = JSON.stringify(response.data[0]);
-      console.log(l);
+      jsonVal = JSON.stringify(response.data[0]);
+      console.log(jsonVal);
+
       setData(response.data.name);
     } catch (error) {
       console.log(error);
@@ -41,6 +45,8 @@ export default function App() {
             maxWidth: 250,
             minWidth: 200,
           }}
+          onChangeText={(newText) => setText(newText)}
+          defaultValue={text}
         />
         <Button
           style={{ backgroundColor: "blue", color: "blue" }}
