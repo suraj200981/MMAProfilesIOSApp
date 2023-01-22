@@ -7,6 +7,7 @@ import {
   TextInput,
   Button,
   ScrollView,
+  Image,
 } from "react-native";
 import axios from "axios";
 
@@ -62,17 +63,44 @@ export default function App() {
       </View>
 
       <ScrollView style={styles.scrollView}>
-        <Text style={styles.text}>
-          {Array.isArray(data) ? (
-            data.map((item, index) => (
-              <Text key={index}>
-                {item.name} {item.nickname}
+        {Array.isArray(data) ? (
+          data.map((item, index) => (
+            <View
+              key={index}
+              style={{
+                paddingBottom: 20,
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Image
+                source={{ uri: item.image }}
+                style={{ width: 110, height: 160, borderRadius: 60 / 2 }}
+              />
+              <Text style={styles.text} key={index}>
+                Name: {item.name}
               </Text>
-            ))
-          ) : (
-            <Text>No data</Text>
-          )}
-        </Text>
+              <Text style={styles.text} key={index}>
+                Nickname: {item.nickname}
+              </Text>
+              <Text style={styles.text} key={index}>
+                Country: {item.country}
+              </Text>
+              <Text style={styles.text} key={index}>
+                Fighting out of: {item.fightingOutOf}
+              </Text>
+              <Text style={styles.text} key={index}>
+                Wins: {item.wins}
+              </Text>
+              <Text style={styles.text} key={index}>
+                Losses: {item.losses}
+              </Text>
+            </View>
+          ))
+        ) : (
+          <Text>No data</Text>
+        )}
       </ScrollView>
       <StatusBar style="auto" />
     </View>
