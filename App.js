@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
+
+//navigation
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+
+import { MaterialIcons } from "@expo/vector-icons";
+
 import {
   StyleSheet,
   Text,
@@ -14,88 +20,145 @@ import {
 import FighterSearch from "./components/FighterSearch";
 
 export default function App() {
-  const [data, setData] = useState([]);
+  const Tab = createBottomTabNavigator();
 
-  const sendData = (data) => {
-    setData(data);
-  };
-
-  function holdOnFighter() {
-    console.log("hold on fighter");
-    Vibration.vibrate();
-  }
-
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#fffaf0",
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 40,
-          paddingBottom: 60,
-          paddingTop: 80,
-          color: "darkblue",
-        }}
-      >
-        Search for fighters
-      </Text>
+  function SearchComponent() {
+    return (
       <View
         style={{
-          alignItems: "center",
+          flex: 1,
           justifyContent: "center",
-          marginVertical: 10,
-          paddingHorizontal: 10,
-          paddingTop: 9,
-          borderRadius: 10,
-          boxShadow: "2px 2px 10px #dcdcdc",
+          alignItems: "center",
+          backgroundColor: "#fffaf0",
         }}
       >
-        {/* <FighterSearch /> */}
-
-        <FighterSearch sendData={sendData} />
-      </View>
-      <ScrollView style={styles.scrollView}>
-        {data.length != 0 ? (
-          data.map((item, index) => (
-            <View
-              key={index}
-              style={{
-                paddingBottom: 20,
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <TouchableOpacity
+        <Text
+          style={{
+            fontSize: 40,
+            paddingBottom: 10,
+            paddingTop: 10,
+            color: "darkblue",
+            fontWeight: "bold",
+          }}
+        >
+          Search for fighters
+        </Text>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            marginVertical: 10,
+            paddingHorizontal: 10,
+            paddingTop: 9,
+            borderRadius: 10,
+            boxShadow: "2px 2px 10px #dcdcdc",
+          }}
+        >
+          <FighterSearch sendData={sendData} />
+        </View>
+        <ScrollView style={styles.scrollView}>
+          {data.length != 0 ? (
+            data.map((item, index) => (
+              <View
+                key={index}
                 style={{
                   paddingBottom: 20,
                   flex: 1,
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                onPress={() => holdOnFighter()}
               >
-                <Image
-                  source={{ uri: item.image }}
-                  style={{ width: 150, height: 210, borderRadius: 60 / 2 }}
-                />
-                <Text style={styles.name} key={index}>
-                  {item.name}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          ))
-        ) : (
-          <Text>No Fighters Found</Text>
-        )}
-      </ScrollView>
-      <StatusBar style="auto" />
-    </View>
+                <TouchableOpacity
+                  style={{
+                    paddingBottom: 20,
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onPress={() => holdOnFighter(index)}
+                >
+                  <Image
+                    source={{ uri: item.image }}
+                    style={{ width: 150, height: 210, borderRadius: 60 / 2 }}
+                  />
+                  <Text style={styles.name} key={index}>
+                    {item.name}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ))
+          ) : (
+            <Text>No Fighters Found</Text>
+          )}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  function SettingsScreen() {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Fighter analysis!</Text>
+      </View>
+    );
+  }
+
+  function MyTabs() {
+    return (
+      <Tab.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: "blue",
+          tabBarInactiveTintColor: "grey",
+          tabBarStyle: {
+            backgroundColor: "#fffaf0",
+          },
+          borderRadius: 10,
+        }}
+      >
+        <Tab.Screen
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="search" size={size} color={color} />
+            ),
+          }}
+          name="Search"
+          component={SearchComponent}
+        />
+        <Tab.Screen
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="fitness-center" size={size} color={color} />
+            ),
+          }}
+          name="Breakdown"
+          component={SettingsScreen}
+        />
+      </Tab.Navigator>
+    );
+  }
+
+  const [data, setData] = useState([]);
+
+  const sendData = (data) => {
+    setData(data);
+  };
+
+  function holdOnFighter(index) {
+    console.log(" ");
+    console.log(" ");
+    console.log("Name: " + data[index].name);
+    console.log("Nickname: " + data[index].nickname);
+    console.log("Fighting Out Of: " + data[index].fightingOutOf);
+    console.log("Wins: " + data[index].wins);
+    console.log("Losses: " + data[index].losses);
+    console.log("Weight Class: " + data[index].weightClass);
+    Vibration.vibrate();
+  }
+
+  return (
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
   );
 }
 

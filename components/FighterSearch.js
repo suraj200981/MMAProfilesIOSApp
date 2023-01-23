@@ -8,9 +8,7 @@ export default function FighterSearch(props) {
   let jsonVal = [];
 
   const handleButtonClick = async () => {
-    //double click to search
     console.log("searching for " + text);
-
     try {
       const response = await axios.get(
         "https://mma-fighter-profile-api-appdev.herokuapp.com/api/search?name=" +

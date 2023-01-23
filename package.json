@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.5.3",
     "axios": "^1.2.3",
     "expo": "~47.0.12",
     "expo-status-bar": "~1.4.2",
@@ -16,7 +17,8 @@
     "react-dom": "^18.1.0",
     "react-native": "^0.70.5",
     "react-native-double-click": "^1.0.5",
-    "react-native-web": "~0.18.7"
+    "react-native-web": "~0.18.7",
+    "react-navigation-tabs": "^2.11.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
