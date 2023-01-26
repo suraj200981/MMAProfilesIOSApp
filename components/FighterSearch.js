@@ -6,7 +6,6 @@ export default function FighterSearch(props) {
   const [data, setData] = useState([]);
   const [text, setText] = useState("");
   let jsonVal = [];
-
   const handleButtonClick = async () => {
     console.log("searching for " + text);
     try {
@@ -33,7 +32,7 @@ export default function FighterSearch(props) {
           borderWidth: 1,
           maxWidth: 250,
           minWidth: 200,
-          paddingHorizontal: 10,
+          paddingHorizontal: 15,
           borderRadius: 20,
           backgroundColor: "#fff",
         }}

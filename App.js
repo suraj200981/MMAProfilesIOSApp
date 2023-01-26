@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 
 import { MaterialIcons } from "@expo/vector-icons";
-
 import {
   StyleSheet,
   Text,
@@ -14,6 +13,7 @@ import {
   TouchableOpacity,
   Image,
   Vibration,
+  ActivityIndicator,
 } from "react-native";
 
 //import components
@@ -21,6 +21,8 @@ import FighterSearch from "./components/FighterSearch";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
+
+  let searchSpinner = false;
 
   function SearchComponent() {
     return (
@@ -56,7 +58,10 @@ export default function App() {
         >
           <FighterSearch sendData={sendData} />
         </View>
-        <ScrollView style={styles.scrollView}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollView}
+        >
           {data.length != 0 ? (
             data.map((item, index) => (
               <View
@@ -90,6 +95,7 @@ export default function App() {
           ) : (
             <Text>No Fighters Found</Text>
           )}
+          {searchSpinner ? <ActivityIndicator size="large" /> : false}
         </ScrollView>
       </View>
     );
