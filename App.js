@@ -22,8 +22,6 @@ import FighterSearch from "./components/FighterSearch";
 export default function App() {
   const Tab = createBottomTabNavigator();
 
-  let searchSpinner = false;
-
   function SearchComponent() {
     return (
       <View
@@ -56,7 +54,10 @@ export default function App() {
             boxShadow: "2px 2px 10px #dcdcdc",
           }}
         >
-          <FighterSearch sendData={sendData} />
+          <FighterSearch
+            sendData={sendData}
+            sendSearchSpinner={sendSearchSpinner}
+          />
         </View>
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -144,9 +145,14 @@ export default function App() {
   }
 
   const [data, setData] = useState([]);
+  const [searchSpinner, setSpinner] = useState(false);
 
   const sendData = (data) => {
     setData(data);
+  };
+
+  const sendSearchSpinner = (searchSpinner) => {
+    setSpinner(searchSpinner);
   };
 
   function holdOnFighter(index) {

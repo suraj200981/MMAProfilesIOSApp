@@ -5,6 +5,8 @@ import { StyleSheet, View, TextInput, Button } from "react-native";
 export default function FighterSearch(props) {
   const [data, setData] = useState([]);
   const [text, setText] = useState("");
+  const [searchSpinner, setSpinner] = useState(false);
+
   let jsonVal = [];
   const handleButtonClick = async () => {
     console.log("searching for " + text);
@@ -16,6 +18,8 @@ export default function FighterSearch(props) {
       jsonVal = response.data;
 
       setData(jsonVal);
+      setSpinner(true);
+      props.setSpinner(true);
       props.sendData(jsonVal);
     } catch (error) {
       console.log(error);
