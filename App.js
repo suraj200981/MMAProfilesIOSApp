@@ -20,7 +20,13 @@ import {
 import FighterSearch from "./components/FighterSearch";
 
 export default function App() {
+  const [searchSpinner, setSearchSpinner] = useState(false);
+
   const Tab = createBottomTabNavigator();
+
+  function sendSearchSpinner(spinner) {
+    setSearchSpinner(spinner);
+  }
 
   function SearchComponent() {
     return (
@@ -58,13 +64,14 @@ export default function App() {
             sendData={sendData}
             sendSearchSpinner={sendSearchSpinner}
           />
+          {searchSpinner && <ActivityIndicator size="large" color="#0000ff" />}
         </View>
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={styles.scrollView}
         >
-          {data.length != 0 ? (
-            data.map((item, index) => (
+          {searchData.length != 0 ? (
+            searchData.map((item, index) => (
               <View
                 key={index}
                 style={{
@@ -93,10 +100,11 @@ export default function App() {
                 </TouchableOpacity>
               </View>
             ))
-          ) : (
+          ) : searchSpinner == false ? (
             <Text>No Fighters Found</Text>
+          ) : (
+            <Text>Searching for fighter</Text>
           )}
-          {searchSpinner ? <ActivityIndicator size="large" /> : false}
         </ScrollView>
       </View>
     );
@@ -144,26 +152,21 @@ export default function App() {
     );
   }
 
-  const [data, setData] = useState([]);
-  const [searchSpinner, setSpinner] = useState(false);
+  const [searchData, setData] = useState([]);
 
-  const sendData = (data) => {
-    setData(data);
-  };
-
-  const sendSearchSpinner = (searchSpinner) => {
-    setSpinner(searchSpinner);
+  const sendData = (searchData) => {
+    setData(searchData);
   };
 
   function holdOnFighter(index) {
     console.log(" ");
     console.log(" ");
-    console.log("Name: " + data[index].name);
-    console.log("Nickname: " + data[index].nickname);
-    console.log("Fighting Out Of: " + data[index].fightingOutOf);
-    console.log("Wins: " + data[index].wins);
-    console.log("Losses: " + data[index].losses);
-    console.log("Weight Class: " + data[index].weightClass);
+    console.log("Name: " + searchData[index].name);
+    console.log("Nickname: " + searchData[index].nickname);
+    console.log("Fighting Out Of: " + searchData[index].fightingOutOf);
+    console.log("Wins: " + searchData[index].wins);
+    console.log("Losses: " + searchData[index].losses);
+    console.log("Weight Class: " + searchData[index].weightClass);
     Vibration.vibrate();
   }
 
