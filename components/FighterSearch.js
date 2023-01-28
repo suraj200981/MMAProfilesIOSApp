@@ -8,6 +8,7 @@ export default function FighterSearch(props) {
   const [searchSpinner, setSpinner] = useState(false);
 
   let jsonVal = [];
+
   const handleButtonClick = async () => {
     console.log("searching for " + text);
     try {
