@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 
 export default function FighterSearch(props) {
@@ -16,27 +17,31 @@ export default function FighterSearch(props) {
   let jsonVal = [];
 
   const handleButtonClick = async () => {
-    console.log("searching for " + text);
-    setSpinner(true);
-    props.sendSearchSpinner(true);
+    if (text.match(/^\s*$/)) {
+      Alert.alert("Please enter a fighter");
+    } else {
+      console.log("searching for " + text);
+      setSpinner(true);
+      props.sendSearchSpinner(true);
 
-    //make send data empty
-    setData([]);
-    props.sendData([]);
-    try {
-      const response = await axios.get(
-        "https://mma-fighter-profile-api-appdev.herokuapp.com/api/search?name=" +
-          text
-      );
-      jsonVal = response.data;
-      setData(jsonVal);
-      props.sendData(jsonVal);
-      setSpinner(false);
-      props.sendSearchSpinner(false);
-    } catch (error) {
-      console.log(error);
-      setSpinner(false);
-      props.sendSearchSpinner(false);
+      //make send data empty
+      setData([]);
+      props.sendData([]);
+      try {
+        const response = await axios.get(
+          "https://mma-fighter-profile-api-appdev.herokuapp.com/api/search?name=" +
+            text
+        );
+        jsonVal = response.data;
+        setData(jsonVal);
+        props.sendData(jsonVal);
+        setSpinner(false);
+        props.sendSearchSpinner(false);
+      } catch (error) {
+        console.log(error);
+        setSpinner(false);
+        props.sendSearchSpinner(false);
+      }
     }
   };
 
