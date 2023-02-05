@@ -23,7 +23,6 @@ export default function FighterSearch(props) {
     //make send data empty
     setData([]);
     props.sendData([]);
-//Glover Teixeira
     try {
       const response = await axios.get(
         "https://mma-fighter-profile-api-appdev.herokuapp.com/api/search?name=" +
@@ -55,7 +54,8 @@ export default function FighterSearch(props) {
           borderRadius: 20,
           backgroundColor: "#fff",
         }}
-        onChangeText={(newText) => setText(newText)}
+        autoCorrect={false}
+        onChangeText={(newText) => setText(newText.toLowerCase())}
         defaultValue={text}
       />
       <Button
@@ -65,7 +65,6 @@ export default function FighterSearch(props) {
         buttonStyle={styles.searchButton}
         titleStyle={styles.searchButtonTitle}
       ></Button>
-      {/* {searchSpinner && <ActivityIndicator size="large" color="#0000ff" />} */}
     </View>
   );
 }
