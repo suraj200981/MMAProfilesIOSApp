@@ -13,12 +13,40 @@ export default function FighterSearch(props) {
   const [data, setData] = useState([]);
   const [text, setText] = useState("");
   const [searchSpinner, setSpinner] = useState(false);
+  const [allNames, setAllNames] = useState([]);
 
   let jsonVal = [];
 
+  //function to get all names from api
+  function getAllNames() {
+    fetch(
+      "https://mma-fighter-profile-api-appdev.herokuapp.com/api/allNames"
+    ).then((response) => {
+      response
+        .json()
+        .then((data) => {
+          console.log(data);
+          setAllNames(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }
+
+  //get text
+  function getText() {
+    if (text != null) {
+      return text;
+    }
+  }
+
   const handleButtonClick = async () => {
+    getAllNames();
+
     if (text.match(/^\s*$/)) {
       Alert.alert("Please enter a fighter");
+      setText("");
     } else {
       console.log("searching for " + text);
       setSpinner(true);
@@ -45,6 +73,42 @@ export default function FighterSearch(props) {
     }
   };
 
+  function checkNames(newText) {
+    setText(newText);
+    let closestMatch = "";
+    let closestMatchDistance = 100;
+    let currentMatchDistance = 0;
+    let currentMatch = "";
+    let currentName = "";
+    let currentNameArray = [];
+    let textArray = newText.toLowerCase().split("");
+
+    let x = 0;
+    while (true) {
+      for (let j = 0; j < text.length; j++) {
+        if (allNames[x] == textArray[j]) {
+          console.log(String(allNames[x]) + " and " + textArray[j]);
+          console.log("match");
+          currentMatchDistance++;
+        } else {
+          x++;
+          break;
+        }
+      }
+
+      if (currentMatchDistance < closestMatchDistance) {
+        closestMatch = currentName;
+
+        closestMatchDistance = currentMatchDistance;
+        break;
+      }
+
+      currentMatchDistance = 0;
+    }
+
+    console.log("Closest match: ", closestMatch);
+  }
+
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
       <TextInput
@@ -60,7 +124,7 @@ export default function FighterSearch(props) {
           backgroundColor: "#fff",
         }}
         autoCorrect={false}
-        onChangeText={(newText) => setText(newText.toLowerCase())}
+        onChangeText={checkNames}
         defaultValue={text}
       />
       <Button
