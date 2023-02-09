@@ -151,7 +151,9 @@ export default function FighterSearch(props) {
       </View>
 
       {showDropdown && (
-        <Dropdown names={filteredNames} onPress={handleItemPress} />
+        <View style={{ maxHeight: 50 }}>
+          <Dropdown names={filteredNames} onPress={handleItemPress} />
+        </View>
       )}
     </View>
   );
