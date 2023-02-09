@@ -115,33 +115,44 @@ export default function FighterSearch(props) {
   };
 
   return (
-    <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <TextInput
+    <View>
+      <View
         style={{
-          flex: 1,
-          height: 30,
-          borderColor: "black",
-          borderWidth: 1,
-          maxWidth: 250,
-          minWidth: 200,
-          paddingHorizontal: 15,
-          borderRadius: 20,
-          backgroundColor: "#fff",
+          flexDirection: "row",
+          alignItems: "center",
+          height: 50,
+          width: "100%",
         }}
-        autoCorrect={false}
-        onChangeText={filterNames}
-        defaultValue={text}
-      />
+      >
+        <TextInput
+          style={{
+            flex: 1,
+            height: 30,
+            borderColor: "black",
+            borderWidth: 1,
+            maxWidth: 250,
+            minWidth: 200,
+            paddingHorizontal: 15,
+            borderRadius: 20,
+            backgroundColor: "#fff",
+          }}
+          autoCorrect={false}
+          onChangeText={filterNames}
+          defaultValue={text}
+        />
+
+        <Button
+          title="Search"
+          color="blue"
+          onPress={handleButtonClick}
+          buttonStyle={styles.searchButton}
+          titleStyle={styles.searchButtonTitle}
+        ></Button>
+      </View>
+
       {showDropdown && (
         <Dropdown names={filteredNames} onPress={handleItemPress} />
       )}
-      <Button
-        title="Search"
-        color="blue"
-        onPress={handleButtonClick}
-        buttonStyle={styles.searchButton}
-        titleStyle={styles.searchButtonTitle}
-      ></Button>
     </View>
   );
 }
