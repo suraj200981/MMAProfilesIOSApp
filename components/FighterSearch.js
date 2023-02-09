@@ -34,6 +34,21 @@ export default function FighterSearch(props) {
     });
   }
 
+  //Dynamic filtering of names based on user input and console log the names
+  function filterNames(newText) {
+    setText(newText);
+    let testText = "k";
+    console.log(testText);
+    //filter all names based on user input
+    console.log(allNames);
+    const filteredNames = allNames.filter((name) => {
+      const textData = name.toLowerCase();
+      const textDataTest = testText.toLowerCase();
+      return textData.indexOf(textDataTest) > -1;
+    });
+    console.log(filteredNames);
+  }
+
   //get text
   function getText() {
     if (text != null) {
@@ -75,38 +90,6 @@ export default function FighterSearch(props) {
 
   function checkNames(newText) {
     setText(newText);
-    let closestMatch = "";
-    let closestMatchDistance = 100;
-    let currentMatchDistance = 0;
-    let currentMatch = "";
-    let currentName = "";
-    let currentNameArray = [];
-    let textArray = newText.toLowerCase().split("");
-
-    let x = 0;
-    while (true) {
-      for (let j = 0; j < text.length; j++) {
-        if (allNames[x] == textArray[j]) {
-          console.log(String(allNames[x]) + " and " + textArray[j]);
-          console.log("match");
-          currentMatchDistance++;
-        } else {
-          x++;
-          break;
-        }
-      }
-
-      if (currentMatchDistance < closestMatchDistance) {
-        closestMatch = currentName;
-
-        closestMatchDistance = currentMatchDistance;
-        break;
-      }
-
-      currentMatchDistance = 0;
-    }
-
-    console.log("Closest match: ", closestMatch);
   }
 
   return (
@@ -124,7 +107,7 @@ export default function FighterSearch(props) {
           backgroundColor: "#fff",
         }}
         autoCorrect={false}
-        onChangeText={checkNames}
+        onChangeText={filterNames}
         defaultValue={text}
       />
       <Button
