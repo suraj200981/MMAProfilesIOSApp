@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   StyleSheet,
@@ -7,6 +7,9 @@ import {
   Button,
   ActivityIndicator,
   Alert,
+  FlatList,
+  Text,
+  TouchableOpacity,
 } from "react-native";
 
 export default function FighterSearch(props) {
@@ -14,51 +17,74 @@ export default function FighterSearch(props) {
   const [text, setText] = useState("");
   const [searchSpinner, setSpinner] = useState(false);
   const [allNames, setAllNames] = useState([]);
+  const [filteredNames, setFilteredNames] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   let jsonVal = [];
 
-  //function to get all names from api
-  function getAllNames() {
-    fetch(
-      "https://mma-fighter-profile-api-appdev.herokuapp.com/api/allNames"
-    ).then((response) => {
-      response
-        .json()
-        .then((data) => {
-          console.log(data);
-          setAllNames(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
+  useEffect(() => {
+    //this will only get names with every search request
+    getAllNames();
+  }, []);
+
+  function Dropdown({ names, onPress }) {
+    return (
+      <View>
+        {text.length > 0 ? (
+          <FlatList
+            data={names}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => onPress(item)}>
+                <Text>{item}</Text>
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item) => item}
+          />
+        ) : null}
+      </View>
+    );
   }
 
   //Dynamic filtering of names based on user input and console log the names
   function filterNames(newText) {
     setText(newText);
-    let testText = "k";
-    console.log(testText);
     //filter all names based on user input
-    console.log(allNames);
-    const filteredNames = allNames.filter((name) => {
-      const textData = name.toLowerCase();
-      const textDataTest = testText.toLowerCase();
-      return textData.indexOf(textDataTest) > -1;
+    let filteredNames = allNames.filter((name) => {
+      return name.toLowerCase().includes(newText.toLowerCase());
     });
-    console.log(filteredNames);
+    console.log(filteredNames, "filtered names array");
+    setFilteredNames(filteredNames);
+    setShowDropdown(true);
   }
 
-  //get text
-  function getText() {
-    if (text != null) {
-      return text;
+  //function to get all names from api
+  function getAllNames() {
+    if (isLoading) {
+      fetch(
+        "https://mma-fighter-profile-api-appdev.herokuapp.com/api/allNames"
+      ).then((response) => {
+        response
+          .json()
+          .then((data) => {
+            console.log(data);
+            setAllNames(data);
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            setIsLoading(false);
+          });
+      });
     }
   }
 
-  const handleButtonClick = async () => {
-    getAllNames();
+  function handleItemPress(item) {
+    setText(item);
+    setShowDropdown(false);
+  }
 
+  const handleButtonClick = async () => {
     if (text.match(/^\s*$/)) {
       Alert.alert("Please enter a fighter");
       setText("");
@@ -88,35 +114,47 @@ export default function FighterSearch(props) {
     }
   };
 
-  function checkNames(newText) {
-    setText(newText);
-  }
-
   return (
-    <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <TextInput
+    <View>
+      <View
         style={{
-          flex: 1,
-          height: 30,
-          borderColor: "black",
-          borderWidth: 1,
-          maxWidth: 250,
-          minWidth: 200,
-          paddingHorizontal: 15,
-          borderRadius: 20,
-          backgroundColor: "#fff",
+          flexDirection: "row",
+          alignItems: "center",
+          height: 50,
+          width: "100%",
         }}
-        autoCorrect={false}
-        onChangeText={filterNames}
-        defaultValue={text}
-      />
-      <Button
-        title="Search"
-        color="blue"
-        onPress={handleButtonClick}
-        buttonStyle={styles.searchButton}
-        titleStyle={styles.searchButtonTitle}
-      ></Button>
+      >
+        <TextInput
+          style={{
+            flex: 1,
+            height: 30,
+            borderColor: "black",
+            borderWidth: 1,
+            maxWidth: 250,
+            minWidth: 200,
+            paddingHorizontal: 15,
+            borderRadius: 20,
+            backgroundColor: "#fff",
+          }}
+          autoCorrect={false}
+          onChangeText={filterNames}
+          defaultValue={text}
+        />
+
+        <Button
+          title="Search"
+          color="blue"
+          onPress={handleButtonClick}
+          buttonStyle={styles.searchButton}
+          titleStyle={styles.searchButtonTitle}
+        ></Button>
+      </View>
+
+      {showDropdown && (
+        <View style={{ maxHeight: 50 }}>
+          <Dropdown names={filteredNames} onPress={handleItemPress} />
+        </View>
+      )}
     </View>
   );
 }
