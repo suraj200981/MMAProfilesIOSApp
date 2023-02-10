@@ -36,7 +36,9 @@ export default function FighterSearch(props) {
             style={{ height: 100 }}
             data={names}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => onPress(item)}>
+              <TouchableOpacity
+                onPress={() => onPress(item, handleButtonClick())}
+              >
                 <Text style={styles.dropdown}>{item}</Text>
               </TouchableOpacity>
             )}
