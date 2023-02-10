@@ -36,9 +36,7 @@ export default function FighterSearch(props) {
             style={{ height: 100 }}
             data={names}
             renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => onPress(item, handleButtonClick())}
-              >
+              <TouchableOpacity onPress={() => onPress(item)}>
                 <Text style={styles.dropdown}>{item}</Text>
               </TouchableOpacity>
             )}
@@ -47,6 +45,11 @@ export default function FighterSearch(props) {
         ) : null}
       </View>
     );
+  }
+
+  //this function will set the text to the name selected from the dropdown
+  function updateText(item) {
+    setText(item);
   }
 
   //Dynamic filtering of names based on user input and console log the names
@@ -84,6 +87,7 @@ export default function FighterSearch(props) {
 
   function handleItemPress(item) {
     setText(item);
+    handleButtonClick();
     setShowDropdown(false);
   }
 
