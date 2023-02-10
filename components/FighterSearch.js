@@ -33,10 +33,11 @@ export default function FighterSearch(props) {
       <View>
         {text.length > 0 ? (
           <FlatList
+            style={{ height: 100 }}
             data={names}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => onPress(item)}>
-                <Text>{item}</Text>
+                <Text style={styles.dropdown}>{item}</Text>
               </TouchableOpacity>
             )}
             keyExtractor={(item) => item}
@@ -151,7 +152,7 @@ export default function FighterSearch(props) {
       </View>
 
       {showDropdown && (
-        <View style={{ maxHeight: 50 }}>
+        <View style={{ maxHeight: 70 }}>
           <Dropdown names={filteredNames} onPress={handleItemPress} />
         </View>
       )}
@@ -171,7 +172,6 @@ const styles = StyleSheet.create({
   },
   searchButton: {
     backgroundColor: "red",
-    borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 15,
     elevation: 10,
@@ -180,5 +180,18 @@ const styles = StyleSheet.create({
   searchButtonTitle: {
     color: "white",
     fontWeight: "bold",
+  },
+  dropdown: {
+    backgroundColor: "white",
+    //curve the edges
+    paddingHorizontal: 15,
+    elevation: 10,
+    paddingTop: 10,
+    paddingBottom: 12,
+    color: "black",
+    fontWeight: "bold",
+    width: 250,
+    borderCurve: 20,
+    lineHeight: 10,
   },
 });
