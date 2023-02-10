@@ -51,7 +51,7 @@ export default function FighterSearch(props) {
     setText(newText);
     //filter all names based on user input
     let filteredNames = allNames.filter((name) => {
-      return name.toLowerCase().includes(newText.toLowerCase());
+      return name.toLowerCase().startsWith(newText.toLowerCase());
     });
     console.log(filteredNames, "filtered names array");
     setFilteredNames(filteredNames);
