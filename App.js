@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
     //width 300 and 500 height background color grey
     width: 400,
     height: 580,
-    backgroundColor: "rgba(238, 252, 255, 0.985)",
+    backgroundColor: "rgba(238, 252, 255, 0.96)",
     borderRadius: 10,
     position: "absolute",
     bottom: 40,
