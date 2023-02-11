@@ -14,6 +14,7 @@ import {
   Image,
   Vibration,
   ActivityIndicator,
+  Modal,
 } from "react-native";
 
 //import components
@@ -21,6 +22,7 @@ import FighterSearch from "./components/FighterSearch";
 
 export default function App() {
   const [searchSpinner, setSearchSpinner] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const Tab = createBottomTabNavigator();
 
@@ -66,21 +68,14 @@ export default function App() {
           />
           {searchSpinner && <ActivityIndicator size="large" color="#0000ff" />}
         </View>
+
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={styles.scrollView}
         >
           {searchData.length != 0 ? (
             searchData.map((item, index) => (
-              <View
-                key={index}
-                style={{
-                  paddingBottom: 20,
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <View key={index}>
                 <TouchableOpacity
                   style={{
                     paddingBottom: 20,
@@ -106,6 +101,15 @@ export default function App() {
             <Text>Searching for fighter</Text>
           )}
         </ScrollView>
+        {showPopup && (
+          <View style={styles.popupContainer}>
+            {/* Display the fighter's information here */}
+
+            <TouchableOpacity onPress={() => setShowPopup(false)}>
+              <Text style={{ fontSize: 20, alignItems: "center" }}>X</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     );
   }
@@ -159,6 +163,7 @@ export default function App() {
   };
 
   function holdOnFighter(index) {
+    setShowPopup(true);
     console.log(" ");
     console.log(" ");
     console.log("Name: " + searchData[index].name);
@@ -198,5 +203,12 @@ const styles = StyleSheet.create({
   searchButtonTitle: {
     color: "white",
     fontWeight: "bold",
+  },
+  popupContainer: {
+    //width 300 and 500 height background color grey
+    width: 300,
+    height: 500,
+    backgroundColor: "grey",
+    position: "absolute",
   },
 });

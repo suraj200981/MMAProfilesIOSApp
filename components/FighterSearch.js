@@ -47,11 +47,6 @@ export default function FighterSearch(props) {
     );
   }
 
-  //this function will set the text to the name selected from the dropdown
-  function updateText(item) {
-    setText(item);
-  }
-
   //Dynamic filtering of names based on user input and console log the names
   function filterNames(newText) {
     setText(newText);
@@ -73,7 +68,6 @@ export default function FighterSearch(props) {
         response
           .json()
           .then((data) => {
-            console.log(data);
             setAllNames(data);
             setIsLoading(false);
           })
