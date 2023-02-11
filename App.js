@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import {
   StyleSheet,
   Text,
@@ -14,6 +14,7 @@ import {
   Image,
   Vibration,
   ActivityIndicator,
+  Modal,
 } from "react-native";
 
 //import components
@@ -21,6 +22,9 @@ import FighterSearch from "./components/FighterSearch";
 
 export default function App() {
   const [searchSpinner, setSearchSpinner] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [searchData, setData] = useState([]);
+  const [profile, setProfile] = useState([]);
 
   const Tab = createBottomTabNavigator();
 
@@ -66,21 +70,14 @@ export default function App() {
           />
           {searchSpinner && <ActivityIndicator size="large" color="#0000ff" />}
         </View>
+
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={styles.scrollView}
         >
           {searchData.length != 0 ? (
             searchData.map((item, index) => (
-              <View
-                key={index}
-                style={{
-                  paddingBottom: 20,
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <View key={index}>
                 <TouchableOpacity
                   style={{
                     paddingBottom: 20,
@@ -106,6 +103,229 @@ export default function App() {
             <Text>Searching for fighter</Text>
           )}
         </ScrollView>
+        {showPopup && (
+          <View style={styles.popupContainer}>
+            {/* Display the fighter's information here */}
+
+            <TouchableOpacity onPress={() => setShowPopup(false)}>
+              <Text
+                style={{
+                  textAlign: "right",
+                  paddingRight: 15,
+                  paddingTop: 10,
+                  fontWeight: "bold",
+                }}
+              >
+                <FontAwesome5 name="window-close" size={40} color="#434343" />
+              </Text>
+            </TouchableOpacity>
+
+            <View style={{ flexDirection: "row" }}>
+              <View>
+                <Image
+                  source={{ uri: profile.image }}
+                  style={{
+                    width: 110,
+                    height: 110,
+                    borderRadius: 110 / 2,
+                    alignSelf: "left",
+                    marginLeft: 15,
+                    resizeMode: "strech",
+                    marginTop: 20,
+                  }}
+                />
+                <Text
+                  style={{
+                    alignSelf: "left",
+                    marginTop: 20,
+                    marginLeft: 6,
+                    fontWeight: "200",
+                    lineHeight: 20,
+                  }}
+                >
+                  Flag:{" "}
+                </Text>
+                <Image
+                  source={{ uri: profile.flag }}
+                  style={{
+                    width: 50,
+                    height: 30,
+                    alignSelf: "right",
+                    marginLeft: 40,
+                    marginTop: -28,
+                    position: "static",
+                  }}
+                />
+                <Text
+                  style={{
+                    alignSelf: "left",
+                    marginTop: 5,
+                    marginLeft: 6,
+                    fontWeight: "200",
+                    lineHeight: 20,
+                  }}
+                >
+                  Division: {profile.weightClass ? profile.weightClass : "N/A"}
+                </Text>
+                <Text
+                  style={{
+                    alignSelf: "left",
+                    marginTop: 5,
+                    marginLeft: 6,
+                    fontWeight: "200",
+                    lineHeight: 20,
+                    width: 160,
+                  }}
+                >
+                  By way of:{" "}
+                  {profile.fightingOutOf ? profile.fightingOutOf : "N/A"}
+                </Text>
+              </View>
+              <View
+                style={{
+                  marginLeft: 1,
+                  marginTop: 20,
+                  width: 210,
+                }}
+              >
+                <Text style={styles.popUpModalText}>Name: {profile.name}</Text>
+                {/*line break  */}
+                <Text style={styles.popUpModalText}>
+                  Nickname: {profile.nickname ? profile.nickname : "N/A"}
+                </Text>
+
+                <Text style={styles.popUpModalText}>
+                  Height: {profile.height ? profile.height : "N/A"}
+                </Text>
+
+                <Text style={styles.popUpModalText}>
+                  Weight: {profile.weight ? profile.weight : "N/A"}
+                </Text>
+                <Text style={styles.popUpModalText}>
+                  Wins: {profile.wins ? profile.wins : "N/A"}
+                </Text>
+                <Text style={styles.popUpModalText}>
+                  Losses: {profile.losses ? profile.losses : "N/A"}
+                </Text>
+              </View>
+            </View>
+            <View>
+              <Text style={{ textAlign: "center" }}>
+                PROFESSIONAL FIGHT HISTORY
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: "white",
+                  width: 360,
+                  height: 230,
+                  marginLeft: 20,
+                  marginTop: 10,
+                }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: "bold",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      paddingLeft: 10,
+                      marginLeft: 1,
+                      lineHeight: 22,
+                    }}
+                  >
+                    Result
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: "bold",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      paddingLeft: 30,
+                      marginLeft: 1,
+                      lineHeight: 22,
+                    }}
+                  >
+                    Opponent
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: "bold",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      paddingLeft: 130,
+                      marginLeft: 1,
+                      lineHeight: 22,
+                    }}
+                  >
+                    Event
+                  </Text>
+                </View>
+                <ScrollView
+                  style={{
+                    marginTop: 35,
+                    textAlign: "left",
+                    position: "absolute",
+                    width: 349,
+                    height: 190,
+                    paddingLeft: 30,
+                    lineHeight: 10,
+                  }}
+                >
+                  {profile.fights.opponentDataFiltered.map((fight) => (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        marginLeft: -10,
+                        width: 350,
+                        height: 30,
+                        marginTop: -10,
+                        lineHeight: 10,
+                      }}
+                    >
+                      <Text
+                        style={
+                          fight.outcome === "win" ? styles.wins : styles.losses
+                        }
+                      >
+                        {fight.outcome}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          paddingTop: 10,
+                          paddingBottom: 10,
+                          marginLeft: 50,
+                          position: "absolute",
+                          flex: 1,
+                          flexWrap: "wrap",
+                          fontSize: 10,
+                          paddingTop: 10,
+                        }}
+                      >
+                        {fight.opponent}
+                      </Text>
+                      <Text
+                        style={{
+                          flex: 1,
+                          flexWrap: "wrap",
+                          fontSize: 10,
+                          marginLeft: 160,
+                          paddingTop: 10,
+                        }}
+                      >
+                        {fight.event}
+                      </Text>
+                    </View>
+                  ))}
+                </ScrollView>
+              </View>
+            </View>
+          </View>
+        )}
       </View>
     );
   }
@@ -152,21 +372,18 @@ export default function App() {
     );
   }
 
-  const [searchData, setData] = useState([]);
-
   const sendData = (searchData) => {
     setData(searchData);
   };
 
   function holdOnFighter(index) {
+    setShowPopup(true);
+    setProfile(searchData[index]);
     console.log(" ");
     console.log(" ");
-    console.log("Name: " + searchData[index].name);
-    console.log("Nickname: " + searchData[index].nickname);
-    console.log("Fighting Out Of: " + searchData[index].fightingOutOf);
-    console.log("Wins: " + searchData[index].wins);
-    console.log("Losses: " + searchData[index].losses);
-    console.log("Weight Class: " + searchData[index].weightClass);
+    console.log("Profile for: " + searchData[index].name + " has been pressed");
+    console.log(" ");
+    console.log(" ");
     Vibration.vibrate();
   }
 
@@ -198,5 +415,34 @@ const styles = StyleSheet.create({
   searchButtonTitle: {
     color: "white",
     fontWeight: "bold",
+  },
+  popupContainer: {
+    //width 300 and 500 height background color grey
+    width: 400,
+    height: 580,
+    backgroundColor: "rgba(238, 252, 255, 0.985)",
+    borderRadius: 10,
+    position: "absolute",
+    bottom: 40,
+    top: 140,
+  },
+  popUpModalText: {
+    fontSize: 15,
+    fontWeight: "200",
+    lineHeight: 22,
+  },
+  wins: {
+    fontSize: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    position: "absolute",
+    color: "green",
+  },
+  losses: {
+    fontSize: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    position: "absolute",
+    color: "red",
   },
 });

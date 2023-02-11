@@ -68,7 +68,6 @@ export default function FighterSearch(props) {
         response
           .json()
           .then((data) => {
-            console.log(data);
             setAllNames(data);
             setIsLoading(false);
           })
@@ -82,6 +81,7 @@ export default function FighterSearch(props) {
 
   function handleItemPress(item) {
     setText(item);
+    handleButtonClick();
     setShowDropdown(false);
   }
 
