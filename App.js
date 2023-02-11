@@ -25,11 +25,16 @@ export default function App() {
   const [showPopup, setShowPopup] = useState(false);
   const [searchData, setData] = useState([]);
   const [profile, setProfile] = useState([]);
+  const [opponentSearch, setOpponentSearch] = useState("");
 
   const Tab = createBottomTabNavigator();
 
   function sendSearchSpinner(spinner) {
     setSearchSpinner(spinner);
+  }
+
+  function sendOpponentSearch(opponent) {
+    setOpponentSearch(opponent);
   }
 
   function SearchComponent() {
@@ -67,6 +72,7 @@ export default function App() {
           <FighterSearch
             sendData={sendData}
             sendSearchSpinner={sendSearchSpinner}
+            opponentSearch={opponentSearch}
           />
           {searchSpinner && <ActivityIndicator size="large" color="#0000ff" />}
         </View>
@@ -189,7 +195,7 @@ export default function App() {
                 }}
               >
                 <Text style={styles.popUpModalText}>Name: {profile.name}</Text>
-                {/*line break  */}
+
                 <Text style={styles.popUpModalText}>
                   Nickname: {profile.nickname ? profile.nickname : "N/A"}
                 </Text>
@@ -293,21 +299,25 @@ export default function App() {
                       >
                         {fight.outcome}
                       </Text>
-                      <Text
-                        style={{
-                          fontSize: 10,
-                          paddingTop: 10,
-                          paddingBottom: 10,
-                          marginLeft: 50,
-                          position: "absolute",
-                          flex: 1,
-                          flexWrap: "wrap",
-                          fontSize: 10,
-                          paddingTop: 10,
-                        }}
+                      <TouchableOpacity
+                        onPress={() => setOpponentSearch(fight.opponent)}
                       >
-                        {fight.opponent}
-                      </Text>
+                        <Text
+                          style={{
+                            fontSize: 10,
+                            paddingTop: 10,
+                            paddingBottom: 10,
+                            marginLeft: 50,
+                            position: "absolute",
+                            flex: 1,
+                            flexWrap: "wrap",
+                            fontSize: 10,
+                            paddingTop: 10,
+                          }}
+                        >
+                          {fight.opponent}
+                        </Text>
+                      </TouchableOpacity>
                       <Text
                         style={{
                           flex: 1,

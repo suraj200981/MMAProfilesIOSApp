@@ -14,7 +14,7 @@ import {
 
 export default function FighterSearch(props) {
   const [data, setData] = useState([]);
-  const [text, setText] = useState("");
+  let [text, setText] = useState("");
   const [searchSpinner, setSpinner] = useState(false);
   const [allNames, setAllNames] = useState([]);
   const [filteredNames, setFilteredNames] = useState([]);
@@ -26,7 +26,14 @@ export default function FighterSearch(props) {
   useEffect(() => {
     //this will only get names with every search request
     getAllNames();
+    // console.log(props.opponentSearch, "in child");
   }, []);
+
+  //check if opponentSearch is not empty
+
+  useEffect(() => {
+    setText(props.opponentSearch);
+  }, [props.opponentSearch]);
 
   function Dropdown({ names, onPress }) {
     return (
@@ -86,7 +93,9 @@ export default function FighterSearch(props) {
   }
 
   const handleButtonClick = async () => {
-    if (text.match(/^\s*$/)) {
+    // setText(props.opponentSearch);
+    console.log(text);
+    if (!text) {
       Alert.alert("Please enter a fighter");
       setText("");
     } else {
@@ -107,6 +116,8 @@ export default function FighterSearch(props) {
         props.sendData(jsonVal);
         setSpinner(false);
         props.sendSearchSpinner(false);
+        props.opponentSearch = "";
+        setText("");
       } catch (error) {
         console.log(error);
         setSpinner(false);
