@@ -106,7 +106,17 @@ export default function App() {
             {/* Display the fighter's information here */}
 
             <TouchableOpacity onPress={() => setShowPopup(false)}>
-              <Text style={{ fontSize: 20, alignItems: "center" }}>X</Text>
+              <Text
+                style={{
+                  fontSize: 30,
+                  textAlign: "right",
+                  paddingRight: 15,
+                  paddingTop: 10,
+                  fontWeight: "bold",
+                }}
+              >
+                X
+              </Text>
             </TouchableOpacity>
           </View>
         )}
@@ -208,7 +218,8 @@ const styles = StyleSheet.create({
     //width 300 and 500 height background color grey
     width: 300,
     height: 500,
-    backgroundColor: "grey",
+    backgroundColor: "#AFEDFF",
+    borderRadius: 10,
     position: "absolute",
   },
 });
