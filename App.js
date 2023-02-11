@@ -256,38 +256,12 @@ export default function App() {
                       fontWeight: "bold",
                       paddingTop: 10,
                       paddingBottom: 10,
-                      paddingLeft: 30,
+                      paddingLeft: 130,
                       marginLeft: 1,
                       lineHeight: 22,
                     }}
                   >
                     Event
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 10,
-                      fontWeight: "bold",
-                      paddingTop: 10,
-                      paddingBottom: 10,
-                      paddingLeft: 30,
-                      marginLeft: 1,
-                      lineHeight: 22,
-                    }}
-                  >
-                    Date
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 10,
-                      fontWeight: "bold",
-                      paddingTop: 10,
-                      paddingBottom: 10,
-                      paddingLeft: 30,
-                      marginLeft: 1,
-                      lineHeight: 22,
-                    }}
-                  >
-                    Round
                   </Text>
                 </View>
                 <ScrollView
@@ -335,30 +309,6 @@ export default function App() {
                         }}
                       >
                         {fight.event}
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 10,
-                          paddingTop: 10,
-                          paddingBottom: 10,
-                          paddingLeft: 30,
-                          marginLeft: 1,
-                          lineHeight: 22,
-                        }}
-                      >
-                        {fight.date}
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 10,
-                          paddingTop: 10,
-                          paddingBottom: 10,
-                          paddingLeft: 30,
-                          marginLeft: 1,
-                          lineHeight: 22,
-                        }}
-                      >
-                        {fight.round}
                       </Text>
                     </View>
                   ))}
