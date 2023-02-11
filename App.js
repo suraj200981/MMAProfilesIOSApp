@@ -128,7 +128,7 @@ export default function App() {
                       height: 110,
                       borderRadius: 110 / 2,
                       alignSelf: "left",
-                      marginLeft: 20,
+                      marginLeft: 15,
                       resizeMode: "strech",
                       marginTop: 40,
                     }}
@@ -137,7 +137,7 @@ export default function App() {
                     style={{
                       alignSelf: "left",
                       marginTop: 20,
-                      marginLeft: 10,
+                      marginLeft: 6,
                       fontWeight: "200",
                       lineHeight: 20,
                     }}
@@ -150,19 +150,29 @@ export default function App() {
                       width: 50,
                       height: 30,
                       alignSelf: "right",
-                      marginLeft: 70,
-                      marginTop: -25,
+                      marginLeft: 65,
+                      marginTop: -28,
                       position: "fixed",
                     }}
                   />
+                  <Text
+                    style={{
+                      alignSelf: "left",
+                      marginTop: 5,
+                      marginLeft: 6,
+                      fontWeight: "200",
+                      lineHeight: 20,
+                    }}
+                  >
+                    Division:{" "}
+                    {profile.weightClass ? profile.weightClass : "N/A"}
+                  </Text>
                 </View>
                 <View
                   style={{
-                    marginLeft: 20,
+                    marginLeft: 1,
                     marginTop: 40,
                     //wrap text
-                    flexWrap: "wrap",
-                    paddingRight: 10,
                   }}
                 >
                   <Text style={styles.popUpModalText}>
@@ -296,8 +306,9 @@ const styles = StyleSheet.create({
     fontWeight: "200",
     // paddingTop: 10,
     // paddingBottom: 10,
-    paddingRight: 10,
-    flex: 1,
+    paddingRight: 81,
+    flexWrap: "wrap",
+    lineHeight: 22,
   },
   // popUpModalTextContainer: {
   //   paddingTop: 20,
