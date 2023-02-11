@@ -119,14 +119,29 @@ export default function App() {
                 <FontAwesome5 name="window-close" size={40} color="#434343" />
               </Text>
 
-              <Text>Name: {profile.name}</Text>
-              <Text>
+              <Text style={styles.popUpModalText}>Name: {profile.name}</Text>
+              <Text style={styles.popUpModalText}>
                 Nickname: {profile.nickname ? profile.nickname : "N/A"}
               </Text>
-              <Text>Height: {profile.height}</Text>
-              <Text>{profile.weight}</Text>
-              <Text>{profile.wins}</Text>
-              <Text>{profile.losses}</Text>
+              <Text style={styles.popUpModalText}>
+                Height: {profile.height ? profile.height : "N/A"}
+              </Text>
+              <Text style={styles.popUpModalText}>
+                Weight: {profile.weight ? profile.weight : "N/A"}
+              </Text>
+              <Text style={styles.popUpModalText}>
+                Wins: {profile.wins ? profile.wins : "N/A"}
+              </Text>
+              <Text style={styles.popUpModalText}>
+                Losses: {profile.losses ? profile.losses : "N/A"}
+              </Text>
+              <Text style={styles.popUpModalText}>
+                Country:{" "}
+                <Image
+                  source={{ uri: profile.flag }}
+                  style={{ width: 50, height: 30 }}
+                />
+              </Text>
             </TouchableOpacity>
           </View>
         )}
@@ -232,5 +247,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 50,
     top: 150,
+  },
+  popUpModalText: {
+    fontSize: 17,
+    fontWeight: "200",
+    paddingBottom: 10,
   },
 });
