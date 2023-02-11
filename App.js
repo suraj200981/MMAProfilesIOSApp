@@ -118,7 +118,17 @@ export default function App() {
               >
                 <FontAwesome5 name="window-close" size={40} color="#434343" />
               </Text>
-
+              <Image
+                source={{ uri: profile.image }}
+                style={{
+                  width: 130,
+                  height: 130,
+                  borderRadius: 130 / 2,
+                  alignSelf: "center",
+                  resizeMode: "strech",
+                  paddingBottom: 30,
+                }}
+              />
               <Text style={styles.popUpModalText}>Name: {profile.name}</Text>
               <Text style={styles.popUpModalText}>
                 Nickname: {profile.nickname ? profile.nickname : "N/A"}
@@ -200,12 +210,9 @@ export default function App() {
     setProfile(searchData[index]);
     console.log(" ");
     console.log(" ");
-    console.log("Name: " + searchData[index].name);
-    console.log("Nickname: " + searchData[index].nickname);
-    console.log("Fighting Out Of: " + searchData[index].fightingOutOf);
-    console.log("Wins: " + searchData[index].wins);
-    console.log("Losses: " + searchData[index].losses);
-    console.log("Weight Class: " + searchData[index].weightClass);
+    console.log("Profile for: " + searchData[index].name + " has been pressed");
+    console.log(" ");
+    console.log(" ");
     Vibration.vibrate();
   }
 
@@ -240,7 +247,7 @@ const styles = StyleSheet.create({
   },
   popupContainer: {
     //width 300 and 500 height background color grey
-    width: 300,
+    width: 350,
     height: 550,
     backgroundColor: "rgba(238, 252, 255, 0.985)",
     borderRadius: 10,
