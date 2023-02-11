@@ -118,40 +118,76 @@ export default function App() {
               >
                 <FontAwesome5 name="window-close" size={40} color="#434343" />
               </Text>
-              <Image
-                source={{ uri: profile.image }}
-                style={{
-                  width: 130,
-                  height: 130,
-                  borderRadius: 130 / 2,
-                  alignSelf: "center",
-                  resizeMode: "strech",
-                  paddingBottom: 30,
-                }}
-              />
-              <Text style={styles.popUpModalText}>Name: {profile.name}</Text>
-              <Text style={styles.popUpModalText}>
-                Nickname: {profile.nickname ? profile.nickname : "N/A"}
-              </Text>
-              <Text style={styles.popUpModalText}>
-                Height: {profile.height ? profile.height : "N/A"}
-              </Text>
-              <Text style={styles.popUpModalText}>
-                Weight: {profile.weight ? profile.weight : "N/A"}
-              </Text>
-              <Text style={styles.popUpModalText}>
-                Wins: {profile.wins ? profile.wins : "N/A"}
-              </Text>
-              <Text style={styles.popUpModalText}>
-                Losses: {profile.losses ? profile.losses : "N/A"}
-              </Text>
-              <Text style={styles.popUpModalText}>
-                Country:{" "}
-                <Image
-                  source={{ uri: profile.flag }}
-                  style={{ width: 50, height: 30 }}
-                />
-              </Text>
+
+              <View style={{ flexDirection: "row" }}>
+                <View>
+                  <Image
+                    source={{ uri: profile.image }}
+                    style={{
+                      width: 110,
+                      height: 110,
+                      borderRadius: 110 / 2,
+                      alignSelf: "left",
+                      marginLeft: 20,
+                      resizeMode: "strech",
+                      marginTop: 40,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      alignSelf: "left",
+                      marginTop: 20,
+                      marginLeft: 10,
+                      fontWeight: "200",
+                      lineHeight: 20,
+                    }}
+                  >
+                    Country:{" "}
+                  </Text>
+                  <Image
+                    source={{ uri: profile.flag }}
+                    style={{
+                      width: 50,
+                      height: 30,
+                      alignSelf: "right",
+                      marginLeft: 70,
+                      marginTop: -25,
+                      position: "fixed",
+                    }}
+                  />
+                </View>
+                <View
+                  style={{
+                    marginLeft: 20,
+                    marginTop: 40,
+                    //wrap text
+                    flexWrap: "wrap",
+                    paddingRight: 10,
+                  }}
+                >
+                  <Text style={styles.popUpModalText}>
+                    Name: {profile.name}
+                  </Text>
+                  {/*line break  */}
+                  <Text style={styles.popUpModalText}>
+                    Nickname: {profile.nickname ? profile.nickname : "N/A"}
+                  </Text>
+
+                  <Text style={styles.popUpModalText}>
+                    Height: {profile.height ? profile.height : "N/A"}
+                  </Text>
+
+                  <Text style={styles.popUpModalText}>
+                    Weight: {profile.weight ? profile.weight : "N/A"}
+                  </Text>
+                  <Text style={styles.popUpModalText}>
+                    Wins: {profile.wins ? profile.wins : "N/A"}
+                  </Text>
+                  <Text style={styles.popUpModalText}>
+                    Losses: {profile.losses ? profile.losses : "N/A"}
+                  </Text>
+                </View>
+              </View>
             </TouchableOpacity>
           </View>
         )}
@@ -256,8 +292,18 @@ const styles = StyleSheet.create({
     top: 150,
   },
   popUpModalText: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: "200",
-    paddingBottom: 10,
+    // paddingTop: 10,
+    // paddingBottom: 10,
+    paddingRight: 10,
+    flex: 1,
   },
+  // popUpModalTextContainer: {
+  //   paddingTop: 20,
+  //   paddingLeft: 20,
+  //   paddingRight: 70,
+  //   paddingBottom: 10,
+  //   lineHeight: 30,
+  // },
 });
