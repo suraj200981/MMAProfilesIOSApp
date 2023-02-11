@@ -217,7 +217,7 @@ export default function App() {
                 style={{
                   flexDirection: "row",
                   backgroundColor: "white",
-                  width: 359,
+                  width: 360,
                   height: 230,
                   marginLeft: 20,
                   marginTop: 10,
@@ -243,7 +243,7 @@ export default function App() {
                       fontWeight: "bold",
                       paddingTop: 10,
                       paddingBottom: 10,
-                      paddingLeft: 10,
+                      paddingLeft: 30,
                       marginLeft: 1,
                       lineHeight: 22,
                     }}
@@ -266,12 +266,13 @@ export default function App() {
                 </View>
                 <ScrollView
                   style={{
-                    marginTop: 50,
+                    marginTop: 35,
                     textAlign: "left",
                     position: "absolute",
-                    width: 359,
+                    width: 349,
                     height: 190,
                     paddingLeft: 30,
+                    lineHeight: 10,
                   }}
                 >
                   {profile.fights.opponentDataFiltered.map((fight) => (
@@ -282,30 +283,38 @@ export default function App() {
                         width: 350,
                         height: 30,
                         marginTop: -10,
+                        lineHeight: 10,
                       }}
                     >
                       <Text
-                        style={{
-                          fontSize: 10,
-                        }}
+                        style={
+                          fight.outcome === "win" ? styles.wins : styles.losses
+                        }
                       >
                         {fight.outcome}
                       </Text>
                       <Text
                         style={{
                           fontSize: 10,
-                          paddingLeft: 10,
+                          paddingTop: 10,
+                          paddingBottom: 10,
+                          marginLeft: 50,
+                          position: "absolute",
+                          flex: 1,
+                          flexWrap: "wrap",
+                          fontSize: 10,
+                          paddingTop: 10,
                         }}
                       >
                         {fight.opponent}
                       </Text>
                       <Text
                         style={{
+                          flex: 1,
+                          flexWrap: "wrap",
                           fontSize: 10,
+                          marginLeft: 160,
                           paddingTop: 10,
-                          paddingBottom: 10,
-                          paddingLeft: 30,
-                          marginLeft: 1,
                         }}
                       >
                         {fight.event}
@@ -420,8 +429,20 @@ const styles = StyleSheet.create({
   popUpModalText: {
     fontSize: 15,
     fontWeight: "200",
-    // paddingTop: 10,
-    // paddingBottom: 10,
     lineHeight: 22,
+  },
+  wins: {
+    fontSize: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    position: "absolute",
+    color: "green",
+  },
+  losses: {
+    fontSize: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    position: "absolute",
+    color: "red",
   },
 });
