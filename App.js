@@ -210,7 +210,160 @@ export default function App() {
               </View>
             </View>
             <View>
-              <Text style={{ textAlign: "center" }}>FIGHT HISTORY - PRO</Text>
+              <Text style={{ textAlign: "center" }}>
+                PROFESSIONAL FIGHT HISTORY
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: "white",
+                  width: 359,
+                  height: 230,
+                  marginLeft: 20,
+                  marginTop: 10,
+                }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: "bold",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      paddingLeft: 10,
+                      marginLeft: 1,
+                      lineHeight: 22,
+                    }}
+                  >
+                    Result
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: "bold",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      paddingLeft: 10,
+                      marginLeft: 1,
+                      lineHeight: 22,
+                    }}
+                  >
+                    Opponent
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: "bold",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      paddingLeft: 30,
+                      marginLeft: 1,
+                      lineHeight: 22,
+                    }}
+                  >
+                    Event
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: "bold",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      paddingLeft: 30,
+                      marginLeft: 1,
+                      lineHeight: 22,
+                    }}
+                  >
+                    Date
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: "bold",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      paddingLeft: 30,
+                      marginLeft: 1,
+                      lineHeight: 22,
+                    }}
+                  >
+                    Round
+                  </Text>
+                </View>
+                <ScrollView
+                  style={{
+                    marginTop: 50,
+                    textAlign: "left",
+                    position: "absolute",
+                    width: 359,
+                    height: 190,
+                    paddingLeft: 30,
+                  }}
+                >
+                  {profile.fights.opponentDataFiltered.map((fight) => (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        marginLeft: -10,
+                        width: 350,
+                        height: 30,
+                        marginTop: -10,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 10,
+                        }}
+                      >
+                        {fight.outcome}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          paddingLeft: 10,
+                        }}
+                      >
+                        {fight.opponent}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          paddingTop: 10,
+                          paddingBottom: 10,
+                          paddingLeft: 30,
+                          marginLeft: 1,
+                        }}
+                      >
+                        {fight.event}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          paddingTop: 10,
+                          paddingBottom: 10,
+                          paddingLeft: 30,
+                          marginLeft: 1,
+                          lineHeight: 22,
+                        }}
+                      >
+                        {fight.date}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          paddingTop: 10,
+                          paddingBottom: 10,
+                          paddingLeft: 30,
+                          marginLeft: 1,
+                          lineHeight: 22,
+                        }}
+                      >
+                        {fight.round}
+                      </Text>
+                    </View>
+                  ))}
+                </ScrollView>
+              </View>
             </View>
           </View>
         )}
