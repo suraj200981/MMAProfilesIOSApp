@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import {
   StyleSheet,
   Text,
@@ -23,6 +23,8 @@ import FighterSearch from "./components/FighterSearch";
 export default function App() {
   const [searchSpinner, setSearchSpinner] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [searchData, setData] = useState([]);
+  const [profile, setProfile] = useState([]);
 
   const Tab = createBottomTabNavigator();
 
@@ -108,15 +110,23 @@ export default function App() {
             <TouchableOpacity onPress={() => setShowPopup(false)}>
               <Text
                 style={{
-                  fontSize: 30,
                   textAlign: "right",
                   paddingRight: 15,
                   paddingTop: 10,
                   fontWeight: "bold",
                 }}
               >
-                X
+                <FontAwesome5 name="window-close" size={40} color="#434343" />
               </Text>
+
+              <Text>Name: {profile.name}</Text>
+              <Text>
+                Nickname: {profile.nickname ? profile.nickname : "N/A"}
+              </Text>
+              <Text>Height: {profile.height}</Text>
+              <Text>{profile.weight}</Text>
+              <Text>{profile.wins}</Text>
+              <Text>{profile.losses}</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -166,14 +176,13 @@ export default function App() {
     );
   }
 
-  const [searchData, setData] = useState([]);
-
   const sendData = (searchData) => {
     setData(searchData);
   };
 
   function holdOnFighter(index) {
     setShowPopup(true);
+    setProfile(searchData[index]);
     console.log(" ");
     console.log(" ");
     console.log("Name: " + searchData[index].name);
@@ -217,9 +226,11 @@ const styles = StyleSheet.create({
   popupContainer: {
     //width 300 and 500 height background color grey
     width: 300,
-    height: 500,
-    backgroundColor: "#AFEDFF",
+    height: 550,
+    backgroundColor: "rgba(238, 252, 255, 0.985)",
     borderRadius: 10,
     position: "absolute",
+    bottom: 50,
+    top: 150,
   },
 });
