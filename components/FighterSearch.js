@@ -5,28 +5,35 @@ import {
   View,
   TextInput,
   Button,
-  ActivityIndicator,
   Alert,
   FlatList,
   Text,
   TouchableOpacity,
+  AsyncStorage,
 } from "react-native";
 
 export default function FighterSearch(props) {
   const [data, setData] = useState([]);
   const [text, setText] = useState("");
   const [searchSpinner, setSpinner] = useState(false);
-  const [allNames, setAllNames] = useState([]);
+  const [allNames1, setAllNames] = useState([]);
   const [filteredNames, setFilteredNames] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   let jsonVal = [];
 
   useEffect(() => {
     //this will only get names with every search request
     getAllNames();
+    // console.log(props.opponentSearch, "in child");
   }, []);
+
+  //check if opponentSearch is not empty
+
+  useEffect(() => {
+    setText(props.opponentSearch);
+  }, [props.opponentSearch]);
 
   function Dropdown({ names, onPress }) {
     return (
@@ -51,7 +58,7 @@ export default function FighterSearch(props) {
   function filterNames(newText) {
     setText(newText);
     //filter all names based on user input
-    let filteredNames = allNames.filter((name) => {
+    let filteredNames = allNames1.filter((name) => {
       return name.toLowerCase().startsWith(newText.toLowerCase());
     });
     console.log(filteredNames, "filtered names array");
@@ -61,22 +68,23 @@ export default function FighterSearch(props) {
 
   //function to get all names from api
   function getAllNames() {
-    if (isLoading) {
-      fetch(
-        "https://mma-fighter-profile-api-appdev.herokuapp.com/api/allNames"
-      ).then((response) => {
-        response
-          .json()
-          .then((data) => {
-            setAllNames(data);
-            setIsLoading(false);
-          })
-          .catch((err) => {
-            console.log(err);
-            setIsLoading(false);
-          });
-      });
-    }
+    // if (isLoading == true) {
+    fetch(
+      "https://mma-fighter-profile-api-appdev.herokuapp.com/api/allNames"
+    ).then((response) => {
+      response
+        .json()
+        .then((data) => {
+          console.log(data, "all names");
+          setAllNames(data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading(false);
+        });
+    });
+    // }
   }
 
   function handleItemPress(item) {
@@ -86,7 +94,10 @@ export default function FighterSearch(props) {
   }
 
   const handleButtonClick = async () => {
-    if (text.match(/^\s*$/)) {
+    // setText(props.opponentSearch);
+    console.log(text);
+    setIsLoading(true);
+    if (!text) {
       Alert.alert("Please enter a fighter");
       setText("");
     } else {
@@ -107,6 +118,8 @@ export default function FighterSearch(props) {
         props.sendData(jsonVal);
         setSpinner(false);
         props.sendSearchSpinner(false);
+        props.opponentSearch = "";
+        setText("");
       } catch (error) {
         console.log(error);
         setSpinner(false);
