@@ -9,8 +9,8 @@ import {
   FlatList,
   Text,
   TouchableOpacity,
-  AsyncStorage,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function FighterSearch(props) {
   const [data, setData] = useState([]);
@@ -23,11 +23,12 @@ export default function FighterSearch(props) {
 
   let jsonVal = [];
 
-  useEffect(() => {
-    //this will only get names with every search request
-    getAllNames();
-    // console.log(props.opponentSearch, "in child");
-  }, []);
+  // useEffect(() => {
+  //   //this will only get names with every search request
+  //   setAllNames(JSON.stringify(AsyncStorage.getItem("allNames")));
+
+  //   // console.log(props.opponentSearch, "in child");
+  // }, []);
 
   //check if opponentSearch is not empty
 
@@ -55,10 +56,25 @@ export default function FighterSearch(props) {
   }
 
   //Dynamic filtering of names based on user input and console log the names
-  function filterNames(newText) {
+  // function filterNames(newText) {
+  //   setText(newText);
+  //   //filter all names based on user input
+  //   let filteredNames = allNames1.filter((name) => {
+  //     return name.toLowerCase().startsWith(newText.toLowerCase());
+  //   });
+  //   console.log(filteredNames, "filtered names array");
+  //   setFilteredNames(filteredNames);
+  //   setShowDropdown(true);
+  // }
+
+  async function filterNames(newText) {
     setText(newText);
-    //filter all names based on user input
-    let filteredNames = allNames1.filter((name) => {
+    const allNames = await AsyncStorage.getItem("allNames");
+    console.log(allNames, "all names");
+
+    const parsedNames = JSON.parse(allNames);
+    console.log(parsedNames, "parsed names");
+    let filteredNames = parsedNames.filter((name) => {
       return name.toLowerCase().startsWith(newText.toLowerCase());
     });
     console.log(filteredNames, "filtered names array");
@@ -68,23 +84,28 @@ export default function FighterSearch(props) {
 
   //function to get all names from api
   function getAllNames() {
-    // if (isLoading == true) {
-    fetch(
-      "https://mma-fighter-profile-api-appdev.herokuapp.com/api/allNames"
-    ).then((response) => {
-      response
-        .json()
-        .then((data) => {
-          console.log(data, "all names");
-          setAllNames(data);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setIsLoading(false);
-        });
-    });
-    // }
+    const storedAllNames = JSON.stringify(AsyncStorage.getItem("allNames"));
+    if (storedAllNames) {
+      setAllNames(storedAllNames);
+      setIsLoading(false);
+    } else {
+      fetch(
+        "https://mma-fighter-profile-api-appdev.herokuapp.com/api/allNames"
+      ).then((response) => {
+        response
+          .json()
+          .then((data) => {
+            console.log(data, "all names");
+            setAllNames(data);
+            setIsLoading(false);
+            AsyncStorage.setItem("allNames", JSON.stringify(data));
+          })
+          .catch((err) => {
+            console.log(err);
+            setIsLoading(false);
+          });
+      });
+    }
   }
 
   function handleItemPress(item) {
@@ -95,6 +116,7 @@ export default function FighterSearch(props) {
 
   const handleButtonClick = async () => {
     // setText(props.opponentSearch);
+    getAllNames();
     console.log(text);
     setIsLoading(true);
     if (!text) {
